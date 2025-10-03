@@ -1,0 +1,71 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Teachers collection - authenticated users can read/write their own data
+    match /teachers/{teacherId} {
+      allow read, write: if request.auth != null && request.auth.uid == teacherId;
+    }
+    
+    // Attendance collection - authenticated users can read/write
+    match /attendance/{attendanceId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Email notifications collection - authenticated users can read/write
+    match /emailNotifications/{emailId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Student emails collection - authenticated users can read/write
+    match /studentEmails/{studentId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Learning materials collection - REQUIRED FOR LMS
+    match /learningMaterials/{materialId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Assignments collection - REQUIRED FOR ASSIGNMENTS
+    match /assignments/{assignmentId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Announcements collection - REQUIRED FOR ANNOUNCEMENTS
+    match /announcements/{announcementId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Student Roll Numbers collection - REQUIRED FOR STUDENT REGISTRATION
+    match /studentRollNumbers/{rollNumberId} {
+      allow read: if request.auth != null; // All authenticated users can read
+      allow write: if request.auth != null; // Teachers can write
+    }
+    
+    // Students collection - REQUIRED FOR STUDENT LOGIN
+    match /students/{studentId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Student Marks collection - REQUIRED FOR MARKS UPLOAD AND VERIFICATION
+    match /studentMarks/{marksId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Quizzes collection - REQUIRED FOR QUIZ SYSTEM
+    match /quizzes/{quizId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Quiz Submissions collection - REQUIRED FOR QUIZ SYSTEM
+    match /quizSubmissions/{submissionId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Parents collection - REQUIRED FOR PARENT PORTAL
+    match /parents/{parentId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

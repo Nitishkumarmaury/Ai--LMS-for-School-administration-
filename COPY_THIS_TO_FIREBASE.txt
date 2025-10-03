@@ -1,0 +1,98 @@
+﻿rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ========================================
+    // TEACHER COLLECTIONS
+    // ========================================
+    
+    // Teachers collection - authenticated teachers can read/write
+    match /teachers/{teacherId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // ========================================
+    // PARENT PORTAL - ALLOW OPEN READ ACCESS
+    // ========================================
+    
+    // Students collection - ALLOW PARENTS TO READ FOR SIGNUP
+    match /students/{studentId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Parents collection - ALLOW SIGNUP AND LOGIN
+    match /parents/{parentId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Attendance collection - ALLOW PARENTS TO READ
+    match /attendance/{attendanceId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Student Marks collection - ALLOW PARENTS TO READ
+    match /studentMarks/{marksId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Quizzes collection - ALLOW PARENTS TO READ
+    match /quizzes/{quizId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Quiz Submissions collection - ALLOW PARENTS TO READ
+    match /quizSubmissions/{submissionId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // ========================================
+    // STUDENT MANAGEMENT
+    // ========================================
+    
+    // Student Roll Numbers collection
+    match /studentRollNumbers/{rollNumberId} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+    }
+    
+    // Student emails collection
+    match /studentEmails/{studentId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // ========================================
+    // LEARNING MANAGEMENT SYSTEM (LMS)
+    // ========================================
+    
+    // Learning materials collection
+    match /learningMaterials/{materialId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Assignments collection
+    match /assignments/{assignmentId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Announcements collection
+    match /announcements/{announcementId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // ========================================
+    // COMMUNICATION
+    // ========================================
+    
+    // Email notifications collection
+    match /emailNotifications/{emailId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}

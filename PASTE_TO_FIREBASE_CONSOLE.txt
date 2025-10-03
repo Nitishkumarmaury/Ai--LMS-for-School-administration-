@@ -1,0 +1,77 @@
+﻿rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Teachers collection
+    match /teachers/{teacherId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Students collection - PARENTS CAN READ
+    match /students/{studentId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Parents collection - ALLOW SIGNUP AND LOGIN
+    match /parents/{parentId} {
+      allow read: if true;
+      allow create: if true;
+      allow update, delete: if request.auth != null;
+    }
+    
+    // Attendance - PARENTS CAN READ
+    match /attendance/{attendanceId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Student Marks - PARENTS CAN READ
+    match /studentMarks/{marksId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Quizzes - PARENTS CAN READ
+    match /quizzes/{quizId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Quiz Submissions - PARENTS CAN READ
+    match /quizSubmissions/{submissionId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+    
+    // Student Roll Numbers
+    match /studentRollNumbers/{rollNumberId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Student emails
+    match /studentEmails/{studentId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Learning materials
+    match /learningMaterials/{materialId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Assignments
+    match /assignments/{assignmentId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Announcements
+    match /announcements/{announcementId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // Email notifications
+    match /emailNotifications/{emailId} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
